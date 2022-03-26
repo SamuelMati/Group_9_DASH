@@ -9,20 +9,23 @@ import calendar
 
 #githubpath = 'https://raw.githubusercontent.com/TueHellsternKea/dashdemo/main/data/'
 githubpath = './data/'
+data = "my_shop_data.xlsx"
 
 # Import from Excel file, 4 different sheets
-df_customers = pd.read_excel(githubpath + "fake_data.xlsx", sheet_name="customers")
-df_order = pd.read_excel(githubpath + "fake_data.xlsx", sheet_name="order")
-df_employee = pd.read_excel(githubpath + "fake_data.xlsx", sheet_name="employee")
-df_products = pd.read_excel(githubpath + "fake_data.xlsx", sheet_name="products")
+df_customers = pd.read_excel(githubpath + data, sheet_name="customers")
+df_order = pd.read_excel(githubpath + data, sheet_name="order")
+df_employee = pd.read_excel(githubpath + data, sheet_name="employee")
+df_products = pd.read_excel(githubpath + data, sheet_name="products")
 
 
 def get_data():
     # Employee name
-    df_employee['emp_name'] = df_employee['firstname'] + ' ' + df_employee['lastname']
+    df_employee['emp_name'] = df_employee['firstname'] + \
+        ' ' + df_employee['lastname']
 
     # Customers name
-    df_customers['cust_name'] = df_customers['first_name'] + ' ' + df_customers['last_name']
+    df_customers['cust_name'] = df_customers['first_name'] + \
+        ' ' + df_customers['last_name']
 
     # Data - Add: total, order, year, month
     df_order['total'] = df_order['unitprice'] * df_order['quantity']
@@ -39,12 +42,12 @@ def get_data():
     order = pd.merge(order, df_customers, on='customer_id')
 
     # Order - Select colomns
-    order = order[['order_id', 
-                'product_id', 'productname', 'type',
-                'customer_id', 'cust_name', 'city', 'country',
-                'employee_id', 'emp_name', 
-                'orderdate', 'deliverydate', 'deliverytime', 'orderyear', 'ordermonth',
-                'total']]
+    order = order[['order_id',
+                   'product_id', 'productname', 'type',
+                   'customer_id', 'cust_name', 'city', 'country',
+                   'employee_id', 'emp_name',
+                   'orderdate', 'deliverydate', 'deliverytime', 'orderyear', 'ordermonth',
+                   'total']]
 
     # Retuner til app.py
     return order
@@ -59,7 +62,7 @@ def get_year():
 
 
 def get_month():
-        # Month - Create a dataframe with month names
+    # Month - Create a dataframe with month names
     months = []
     for x in range(1, 13):
         months.append(calendar.month_name[x])
